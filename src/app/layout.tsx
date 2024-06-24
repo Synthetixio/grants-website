@@ -9,10 +9,10 @@ type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-const APP_NAME = 'SNX + Toros';
+const APP_NAME = 'Grants Toros UI';
 
 export const metadata: Metadata = {
-  title: { default: APP_NAME, template: '%s | SNX + Toros' },
+  title: { default: APP_NAME, template: '%s | Grants Toros UI' },
   description: '',
   applicationName: APP_NAME,
   appleWebApp: {

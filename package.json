@@ -1,8 +1,8 @@
 {
-  "name": "nextarter-chakra",
+  "name": "grants-toros-ui",
   "version": "0.1.1",
   "private": true,
-  "author": "sozonome",
+  "author": "duyentb.eth",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
