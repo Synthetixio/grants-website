@@ -1,9 +1,15 @@
 'use client';
 
-/** Replace by commented imports while using example */
 import type { ProvidersProps } from '@dhedge/trading-widget';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { TradingWidget } from '@dhedge/trading-widget';
+import dynamic from 'next/dynamic';
+
+const Widget = dynamic(
+  () => import('@dhedge/trading-widget').then(() => TradingWidget),
+  {
+    ssr: false,
+  }
+);
 
 const SIMPLE_WIDGET_CONFIG: ProvidersProps = {
   config: {
@@ -16,8 +22,8 @@ const SIMPLE_WIDGET_CONFIG: ProvidersProps = {
   },
 };
 
-const LiquidityWidget = () => (
-  <TradingWidget {...SIMPLE_WIDGET_CONFIG} suppressHydrationWarning />
-);
+const LiquidityWidget = () => {
+  return <Widget {...SIMPLE_WIDGET_CONFIG} />;
+};
 
 export default LiquidityWidget;
