@@ -2,7 +2,11 @@
 
 import { CacheProvider } from '@chakra-ui/next-js';
 import { arbitrum, base } from '@dhedge/trading-widget';
-import { RainbowKitProvider, getDefaultConfig } from '@rainbow-me/rainbowkit';
+import {
+  RainbowKitProvider,
+  getDefaultConfig,
+  darkTheme,
+} from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { http, WagmiProvider } from 'wagmi';
 
@@ -34,7 +38,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       <ChakraProvider>
         <QueryClientProvider client={queryClient}>
           <WagmiProvider config={config}>
-            <RainbowKitProvider>
+            <RainbowKitProvider theme={darkTheme()}>
               <TradingProviders>{children}</TradingProviders>
             </RainbowKitProvider>
           </WagmiProvider>
