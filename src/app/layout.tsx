@@ -1,9 +1,11 @@
+import '@rainbow-me/rainbowkit/styles.css';
+import '~/lib/styles/globals.css';
+import '@dhedge/trading-widget/style.css';
+
 import type { Metadata, Viewport } from 'next';
 
 import Providers from '~/app/providers';
 import Layout from '~/lib/layout';
-import '~/lib/styles/globals.css';
-import '@dhedge/trading-widget/style.css';
 
 type RootLayoutProps = {
   children: React.ReactNode;

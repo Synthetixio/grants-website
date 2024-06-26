@@ -1,10 +1,10 @@
 'use client';
 
 import { CacheProvider } from '@chakra-ui/next-js';
-import { base } from '@dhedge/trading-widget';
+import { arbitrum, base } from '@dhedge/trading-widget';
+import { RainbowKitProvider, getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createConfig, http, WagmiProvider } from 'wagmi';
-import { injected, metaMask, safe } from 'wagmi/connectors';
+import { http, WagmiProvider } from 'wagmi';
 
 import TradingProviders from '~/app/tradingProviders';
 import { Chakra as ChakraProvider } from '~/lib/components/Chakra';
@@ -18,11 +18,13 @@ const queryClient = new QueryClient({
   },
 });
 
-const config = createConfig({
-  chains: [base],
-  connectors: [injected(), metaMask(), safe()],
+const config = getDefaultConfig({
+  appName: 'Grants Toros UI',
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID ?? 'grants-toros-ui',
+  chains: [base, arbitrum],
   transports: {
     [base.id]: http(),
+    [arbitrum.id]: http(),
   },
 });
 
@@ -32,7 +34,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       <ChakraProvider>
         <QueryClientProvider client={queryClient}>
           <WagmiProvider config={config}>
-            <TradingProviders>{children}</TradingProviders>
+            <RainbowKitProvider>
+              <TradingProviders>{children}</TradingProviders>
+            </RainbowKitProvider>
           </WagmiProvider>
         </QueryClientProvider>
       </ChakraProvider>

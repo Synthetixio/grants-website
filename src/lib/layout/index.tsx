@@ -1,6 +1,7 @@
 'use client';
 
 import { Flex, Box } from '@chakra-ui/react';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { ReactNode } from 'react';
 
 import Footer from './Footer';
@@ -35,7 +36,10 @@ const Layout = ({ children }: LayoutProps) => {
         alignItems="center"
         justifyContent="center"
       >
-        <Box px={4} py={16}>
+        <Box px={4} py={8}>
+          <Flex mb={4} alignItems="center" justifyContent="flex-end">
+            <ConnectButton />
+          </Flex>
           <Box mb={12}>
             <Header />
           </Box>

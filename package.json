@@ -28,6 +28,7 @@
     "@dhedge/trading-widget": "^1.1.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@rainbow-me/rainbowkit": "^2.1.2",
     "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-table": "^8.17.3",
     "axios": "^1.7.2",
