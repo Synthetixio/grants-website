@@ -11,7 +11,7 @@ export const QUERY_KEYS = {
 
 export const SYNTHETIX_VAULT: { [chainId: number]: string } = {
   [base.id]: '0xc1e02884af4a283ca25ab63c45360d220d69da52',
-  [arbitrum.id]: '0xf715724abba480d4d45f4cb52bef5ce5e3513ccc',
+  [arbitrum.id]: '0xc3198eb5102fb3335c0e911ef1da4bc07e403dd1',
 };
 
 export const DEPOSIT_TOKEN = {
