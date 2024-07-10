@@ -15,6 +15,7 @@ const SYNTHETIX_BASE: PoolConfig = {
   symbol: 'sUSDCy',
   address: SYNTHETIX_VAULT[base.id],
   depositParams: {
+    method: 'depositWithCustomCooldown',
     customTokens: [DEPOSIT_TOKEN[base.id]],
   },
   withdrawParams: {
