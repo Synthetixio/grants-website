@@ -20,7 +20,7 @@ const SYNTHETIX_BASE: PoolConfig = {
   withdrawParams: {
     customTokens: [],
   },
-  usePoolLogicDeposit: true,
+  usePoolLogicDeposit: false,
 };
 
 const SIMPLE_INITIAL_STATE: TradingPanelContextConfig['initialState'] = {
