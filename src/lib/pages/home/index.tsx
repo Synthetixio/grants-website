@@ -12,9 +12,10 @@ import {
   StatLabel,
   StatNumber,
 } from '@chakra-ui/react';
+import { base } from '@dhedge/trading-widget';
 import { useQuery } from '@tanstack/react-query';
 import { formatEther } from 'ethers';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useChainId } from 'wagmi';
 
 import getFundByAddress from '~/app/api/dHedge';
@@ -24,22 +25,21 @@ import { formatNumber } from '~/lib/utils/format';
 
 const Home = () => {
   const chainId = useChainId();
-  const synthetixVaultAddress = useMemo(
-    () => SYNTHETIX_VAULT[chainId],
-    [chainId]
-  );
+  const [vaultConfig, setVaultConfig] = useState(SYNTHETIX_VAULT[base.id]);
 
   const { data } = useQuery({
-    queryKey: [QUERY_KEYS.GET_SYNTHETIX_VAULT, synthetixVaultAddress],
-    queryFn: () => getFundByAddress(synthetixVaultAddress),
+    queryKey: [QUERY_KEYS.GET_SYNTHETIX_VAULT, vaultConfig.address],
+    queryFn: () => getFundByAddress(vaultConfig.address),
     retry: 0,
-    enabled: !!synthetixVaultAddress,
+    enabled: !!vaultConfig,
   });
 
-  const tvl = useMemo(
-    () => (data?.totalValue ? Number(formatEther(data?.totalValue)) : 0),
-    [data]
-  );
+  const tvl = data?.totalValue ? Number(formatEther(data?.totalValue)) : 0;
+
+  useEffect(() => {
+    if (!!vaultConfig && vaultConfig.chainId === chainId) return;
+    setVaultConfig(SYNTHETIX_VAULT[chainId ?? base.id]);
+  }, [chainId, vaultConfig]);
 
   return (
     <Flex direction="column" w="full">
@@ -70,10 +70,10 @@ const Home = () => {
                 _hover={{ textDecor: 'none', borderColor: 'gray.500' }}
                 borderBottom="1px solid"
                 borderColor="gray.600"
-                href="https://toros.finance/synthetix-usdc-andromeda-yield"
+                href={vaultConfig.url}
                 isExternal
               >
-                Toros Synthetix USDC Andromeda Yield Vault
+                {vaultConfig.name}
               </Link>
               .
             </Text>

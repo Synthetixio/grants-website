@@ -4,19 +4,32 @@ import type {
   PoolConfig,
   TradingPanelContextConfig,
 } from '@dhedge/trading-widget';
-import { base, TradingPanelProvider } from '@dhedge/trading-widget';
-import { useMemo } from 'react';
+import { arbitrum, base, TradingPanelProvider } from '@dhedge/trading-widget';
+import { useEffect, useMemo, useState } from 'react';
 import { useChainId } from 'wagmi';
 
-import { DEPOSIT_TOKEN, SYNTHETIX_VAULT } from '~/lib/utils/constant';
+import { SYNTHETIX_VAULT } from '~/lib/utils/constant';
 
 const SYNTHETIX_BASE: PoolConfig = {
   chainId: base.id,
   symbol: 'sUSDCy',
-  address: SYNTHETIX_VAULT[base.id],
+  address: SYNTHETIX_VAULT[base.id].address,
   depositParams: {
     method: 'depositWithCustomCooldown',
-    customTokens: [DEPOSIT_TOKEN[base.id]],
+    customTokens: SYNTHETIX_VAULT[base.id].depositTokens,
+  },
+  withdrawParams: {
+    customTokens: [],
+  },
+};
+
+const SYNTHETIX_ARBITRUM: PoolConfig = {
+  chainId: arbitrum.id,
+  symbol: 'sUSDCy',
+  address: SYNTHETIX_VAULT[arbitrum.id].address,
+  depositParams: {
+    method: 'depositWithCustomCooldown',
+    customTokens: SYNTHETIX_VAULT[arbitrum.id].depositTokens,
   },
   withdrawParams: {
     customTokens: [],
@@ -26,8 +39,9 @@ const SYNTHETIX_BASE: PoolConfig = {
 const SIMPLE_INITIAL_STATE: TradingPanelContextConfig['initialState'] = {
   poolConfigMap: {
     [SYNTHETIX_BASE.address]: SYNTHETIX_BASE,
+    [SYNTHETIX_ARBITRUM.address]: SYNTHETIX_ARBITRUM,
   },
-  poolAddress: '',
+  poolAddress: SYNTHETIX_BASE.address,
 };
 
 const SIMPLE_ACTIONS: TradingPanelContextConfig['actions'] = {
@@ -74,7 +88,7 @@ const SIMPLE_ACTIONS: TradingPanelContextConfig['actions'] = {
 const TradingProviders = ({ children }: { children: React.ReactNode }) => {
   const chainId = useChainId();
   const poolAddress = useMemo(
-    () => (chainId ? SYNTHETIX_VAULT[chainId] : SYNTHETIX_BASE.address),
+    () => (chainId ? SYNTHETIX_VAULT[chainId].address : SYNTHETIX_BASE.address),
     [chainId]
   );
 
