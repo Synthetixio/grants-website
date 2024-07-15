@@ -26,7 +26,6 @@ const SYNTHETIX_ARBITRUM: PoolConfig = {
   symbol: 'sUSDCy',
   address: SYNTHETIX_VAULT[arbitrum.id].address,
   depositParams: {
-    method: 'depositWithCustomCooldown',
     customTokens: SYNTHETIX_VAULT[arbitrum.id].depositTokens,
   },
   withdrawParams: {
