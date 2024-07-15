@@ -5,8 +5,6 @@ import type {
   TradingPanelContextConfig,
 } from '@dhedge/trading-widget';
 import { arbitrum, base, TradingPanelProvider } from '@dhedge/trading-widget';
-import { useEffect, useMemo, useState } from 'react';
-import { useChainId } from 'wagmi';
 
 import { SYNTHETIX_VAULT } from '~/lib/utils/constant';
 
@@ -86,17 +84,10 @@ const SIMPLE_ACTIONS: TradingPanelContextConfig['actions'] = {
 };
 
 const TradingProviders = ({ children }: { children: React.ReactNode }) => {
-  const chainId = useChainId();
-  const poolAddress = useMemo(
-    () => (chainId ? SYNTHETIX_VAULT[chainId].address : SYNTHETIX_BASE.address),
-    [chainId]
-  );
-
   return (
     <TradingPanelProvider
       initialState={{
         ...SIMPLE_INITIAL_STATE,
-        poolAddress,
       }}
       actions={SIMPLE_ACTIONS}
     >

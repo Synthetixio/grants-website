@@ -12,7 +12,7 @@ import {
   StatLabel,
   StatNumber,
 } from '@chakra-ui/react';
-import { base } from '@dhedge/trading-widget';
+import { base, useTradingPanelPoolAddress } from '@dhedge/trading-widget';
 import { useQuery } from '@tanstack/react-query';
 import { formatEther } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
@@ -26,6 +26,7 @@ import { formatNumber } from '~/lib/utils/format';
 const Home = () => {
   const chainId = useChainId();
   const [vaultConfig, setVaultConfig] = useState(SYNTHETIX_VAULT[base.id]);
+  const [, setTradingPanelPoolAddress] = useTradingPanelPoolAddress();
 
   const { data } = useQuery({
     queryKey: [QUERY_KEYS.GET_SYNTHETIX_VAULT, vaultConfig.address],
@@ -39,7 +40,8 @@ const Home = () => {
   useEffect(() => {
     if (!!vaultConfig && vaultConfig.chainId === chainId) return;
     setVaultConfig(SYNTHETIX_VAULT[chainId ?? base.id]);
-  }, [chainId, vaultConfig]);
+    setTradingPanelPoolAddress(SYNTHETIX_VAULT[chainId].address);
+  }, [chainId, vaultConfig, setTradingPanelPoolAddress]);
 
   return (
     <Flex direction="column" w="full">
